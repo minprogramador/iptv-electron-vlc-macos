@@ -1,4 +1,4 @@
-# IPTV Player 3m8u + Lista Canais em electron (com vlc para macos).
+# IPTV Player 3m8u + Lista Canais em electron javascript (nodejs) - (com vlc para macos).
 
 Instalar VLC Player para mac os
 ```bash
