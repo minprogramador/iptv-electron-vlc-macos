@@ -1,0 +1,8 @@
+{
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "vlc-player": "^2.0.0"
+  }
+}

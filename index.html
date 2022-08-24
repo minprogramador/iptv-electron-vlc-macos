@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>ITV</title>
+    <style>
+      select { width: 400px; text-align-last:center; }
+      select .lt { text-align: center; }
+      .logo{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+      }
+      #loading{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 50px;
+     }
+      .controls{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+      }
+      #result{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 100%!important;
+        height: 800px;
+        margin-left: 5%;
+        margin-right: 5%;
+      }
+      .canais{
+        background-color: #c9c9c9!important;
+        background-position: center!important;
+        background-repeat: no-repeat!important;
+        width: 200px;
+        height: 100px;
+        border-radius: 10px;
+        border: 1px solid #cecece;
+        margin: 15px;
+        cursor: pointer!important;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .canais button{
+        margin-top: 66%;
+        background-color: transparent;
+        background-repeat: no-repeat;
+        border: none;
+        cursor: pointer;
+        overflow: hidden;
+        outline: none;
+
+      }
+    </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+
+      var corta = function(date, start, end) {
+        try{
+        return date.split(start)[1].split(end)[0];
+        }catch(er){
+          return false;
+        }
+      }
+
+      axios('https://raw.githubusercontent.com/arfaxd/matclts/6108d3641aadde291e4b7f296108bd283963152a/matpcp').then(function(res) {
+        var data = res.data.split("#EXTINF");
+        var ok = [];
+
+        for(dat in data){
+          var ver = data[dat] +  '#fim!';
+
+          if(ver.includes('http://')){
+            var titulo = corta(ver, 'title="', "\n").replace('\", ', ' ');
+            var capa = corta(ver, 'tvg-logo="', '"');
+            var url = corta(ver,  "\nhttp://", "#fim!");
+            url = url.replace(titulo, '').replace("\n", '');
+
+            ok.push({
+              'titulo': titulo,
+              'capa': capa,
+              'url': 'http://' + url,
+            });
+
+            var div = document.getElementById("result");
+            div.innerHTML += '<div><div id="start" url="http://'+url+'" class="canais" style="background: url('+capa+');"><button>'+titulo+'</button></div></div>'; 
+
+            var loading = document.getElementById("loading");
+            loading.style.display = 'none';
+
+          }
+        }
+
+      }).catch(function(er){
+        alert(er);
+      })
+    </script>
+  </head>
+  <body>
+    <h1 class="logo">ITV</h1>
+    <div class="controls">
+      <select>
+        <option>Escolha uma opção</option>
+        <option>Lista de Canais</option>
+        <option>Canais Abertos</option>
+        <option>Canais Cultura e variedade</option>
+        <option>Canais Futebol</option>
+        <option>Canais Esportes</option>
+        <option>Canais Filmes e Séries</option>
+        <option>Canais 4K</option>
+        <option>Canais H264</option>
+        <option>Canais Adulto</option>
+
+      </select>
+    </div>
+    <div id="result">
+      <div id="loading">
+        Carregando...
+      </div>
+    </div>
+    
+  </body>
+  <script src="./renderer.js"></script>
+
+</html>
