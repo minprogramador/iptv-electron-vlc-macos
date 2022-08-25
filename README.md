@@ -1,5 +1,5 @@
-# IPTV Player M3U8 + Lista Canais em electron
-## Em javascript (nodejs) + (vlc para macos).
+# IPTV Player M3U8 + Lista Canais
+## Em electron (javascript/nodejs) + (vlc para macos).
 
 
 Instalar VLC Player para mac os
